@@ -85,6 +85,8 @@
   .pill[data-s="err"] { color: var(--danger); border-color: var(--danger); } .pill[data-s="err"] i { background: var(--danger); }
   @keyframes pulse { 50% { opacity: .3; } }
   @media (prefers-reduced-motion: reduce) { .pill[data-s="run"] i { animation: none; } }
+  /* 갤러리 우선: 데스크톱에서는 설정 패널을 접어 캔버스를 넓게 사용 */
+  @media (min-width: 761px) { #sideToggle { display:inline-flex; align-items:center; } #side { width:320px; } #side:not(.open) { display:none; } }
   .spacer { flex: 1; }
   .ibtn { background: transparent; border: 1px solid var(--line); border-radius: 6px; color: var(--fg-2); height: 30px; min-width: 30px; padding: 0 10px; cursor: pointer; }
   .ibtn:hover { color: var(--fg); border-color: var(--line-strong); }
@@ -1051,7 +1053,7 @@
         </div>
         <div class="tools-r gallery-head-tools">
           <label class="lbl" for="thumb">크기</label>
-          <input id="thumb" type="range" min="120" max="420" step="10" value="240" aria-label="썸네일 크기">
+          <input id="thumb" type="range" min="120" max="420" step="10" value="280" aria-label="썸네일 크기">
           <button class="btn sm" id="grpBtn" type="button" aria-pressed="true" title="순차 생성 등으로 분류가 있는 이미지를 분류별로 묶어서 보여줍니다">▦ 분류별 보기</button>
           <input id="imgImportFiles" type="file" accept="image/*" multiple hidden>
           <button class="btn sm" id="folderBtn" type="button">저장 폴더</button>
@@ -1658,7 +1660,7 @@ document.querySelectorAll(".tab").forEach(tab => tab.addEventListener("click", (
   document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", String(t === tab)));
   document.querySelectorAll(".tp").forEach(p => p.classList.toggle("on", p.id === tab.dataset.tab));
 }));
-const sideOpen = o => { $("side").classList.toggle("open", o); $("scrim").classList.toggle("on", o); };
+const sideOpen = o => { $("side").classList.toggle("open", o); $("scrim").classList.toggle("on", o); $("sideToggle").setAttribute("aria-expanded", String(!!o)); $("sideToggle").setAttribute("aria-label", o ? "설정 닫기" : "설정 열기"); };
 $("sideToggle").addEventListener("click", () => sideOpen(!$("side").classList.contains("open")));
 $("dkSide").addEventListener("click", () => sideOpen(!$("side").classList.contains("open")));
 $("scrim").addEventListener("click", () => sideOpen(false));
